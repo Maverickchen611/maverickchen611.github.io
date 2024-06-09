@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>YouTube 直播歌曲跳轉</title>
+  </head>
+  <body>
+    <div id="player"></div>
+    <button id="nextSongButton">下一首</button>
+
+    <script>
+      // 1. 載入IFrame Player API程式碼。
+      var tag = document.createElement('script');
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      // 2. 當API程式碼下載完畢後，建立一個YouTube播放器。
+      var player;
+      var songTimes = [33, 200, 400, 600]; // 替換為每首歌的起始時間（秒）
+      var currentSongIndex = 0;
+
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+          height: '315',
+          width: '560',
+          videoId: 'K9TEhHq6dyY', // 替換為你的直播影片ID
+          playerVars: {
+            'autoplay': 1,
+            'controls': 1
+          }
+        });
+      }
+
+      // 3. 創建一個按鈕來跳到指定時間。
+      document.getElementById('nextSongButton').addEventListener('click', function() {
+        currentSongIndex = (currentSongIndex + 1) % songTimes.length;
+        player.seekTo(songTimes[currentSongIndex], true);
+      });
+    </script>
+  </body>
+</html>
