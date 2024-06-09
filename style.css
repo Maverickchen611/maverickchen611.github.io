@@ -4,6 +4,11 @@
     overflow-x: auto;
 }
 
+.scrollable-playlistTable {
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
 .playlistTable {
     border-collapse: collapse;
     /* Collapse borders to prevent doubling up */
@@ -39,6 +44,6 @@
     margin-left: 20px; /* Adjust margin as needed */
   }
 body {
-    overflow: hidden;
+    overflow: auto;
 }
 
