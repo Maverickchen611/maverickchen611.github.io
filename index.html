@@ -7,12 +7,14 @@
 
 <body>
   <link rel="stylesheet" href="style.css">
+  <script src="gabuSongs.js"></script>
   <script src="gabuPlaylist.js"></script>
   <script src="script.js"></script>
 
   <script src="https://www.youtube.com/iframe_api"></script>
 
   <div class="container">
+    <div id="videoIndex">12</div>
     <div id="player"></div>
     <div class="playlist-container">
       <div id="currentSong" class="current-song">正在播放: <span id="currentSongTitle"></span></div>
@@ -33,16 +35,27 @@
     </div>
 
   </div>
-  <div class="playlist-container">
-    <div class="scrollable-playlistTable">
-      <table id="playerIdTable" class="playlistTable">
-        <thead>
-          <tr>
-          </tr>
-        </thead>
-      </table>
+  <div style="display: flex; justify-content:left">
+    
+    <div class="playlist-container" >
+      <div class="scrollable-table" style="display: flex;">
+        <table id="playerIdTable" class="playlistTable" >
+          <thead>
+            <tr>
+            </tr>
+          </thead>
+         
+        </table>
+      </div>
     </div>
+    <div class="search-body" >
+      <input type="text" id="searchInput" placeholder="至少三個字">
+      <button id="searchBtn" onclick="search()">Search</button>
+      <div id="result"></div>
+    </div>
+  
   </div>
+  
 
 </body>
 

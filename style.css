@@ -21,29 +21,43 @@
     padding: 8px;
     /* Add padding to the cells for spacing */
 }
+
 /* Fix the first row (header) */
 .playlistTable thead tr {
     position: sticky;
     top: 0;
-    background-color: white; /* Optional: Set background color for clarity */
-  }
+    background-color: white;
+    /* Optional: Set background color for clarity */
+}
+
 .current-song {
     background-color: #f0f0f0;
     /* Set your desired background color */
     /* Add any other styling you want for the current song row */
 }
+
 .container {
     display: flex;
-    justify-content: center; /* Center the content horizontally */
-    align-items: center; /* Center the content vertically */
-  }
-  
+    justify-content: center;
+    /* Center the content horizontally */
+    align-items: center;
+    /* Center the content vertically */
+}
 
-  
-  .playlist-container {
-    margin-left: 20px; /* Adjust margin as needed */
-  }
+.playlist-container {
+    margin-left: 20px;
+    
+    /* Adjust margin as needed */
+}
 body {
     overflow: auto;
 }
 
+#videoIndex{
+    margin-right: 20px;
+}
+
+#playerIdTable{
+    max-width: 100%;
+    overflow: auto
+}
