@@ -1,4 +1,5 @@
 var youtubeID = [
+  "3JNI3wYPD8A",
   "K9TEhHq6dyY",
   "TDB8iYjNHsQ",
   "-x7rxiwLf1I",
@@ -31,6 +32,26 @@ var youtubeID = [
 ]
 
 var gabuPlaylist = {
+  "3JNI3wYPD8A": {
+    name: "【日籍台V】如果cosplay很可愛的話請給我讚！久違的cosplay歌回！",
+    playlist: [
+      { start: "00:15:44", end: "00:16:29", title: "にじ", artist: "" },
+      { start: "00:17:17", end: "00:21:52", title: "粛聖!! ロリ神レクイエム☆", artist: "しぐれうい" },
+      { start: "00:35:07", end: "00:39:46", title: "ヒッチコック ", artist: "ヨルシカ" },
+      { start: "00:46:05", end: "00:50:25", title: "恋愛サーキュレーション ", artist: "花澤香菜" },
+      { start: "01:00:31", end: "01:05:11", title: "好想你", artist: "四葉草(朱主愛)" },
+      { start: "01:08:55", end: "01:13:07", title: "風になる", artist: "" },
+      { start: "01:17:13", end: "01:20:32", title: "残響散歌", artist: "Aimer" },
+      { start: "01:23:46", end: "01:26:59", title: "シル・ヴ・プレジデント", artist: "" },
+      { start: "01:33:37", end: "01:36:56", title: "勇気100%", artist: "" },
+      { start: "01:41:45", end: "01:42:55", title: "Blue Bird", artist: "生物股長" },
+      { start: "01:44:53", end: "01:48:23", title: "CHE.R.RY", artist: "" },
+      { start: "01:53:19", end: "01:56:39", title: "青空", artist: "THE BLUE HEARTS" },
+      { start: "01:57:56", end: "01:59:27", title: "肉肉歌", artist: "珈咘" },
+      { start: "02:03:09", end: "02:07:20", title: "となりのトトロ", artist: "井上あずみ" },
+      { start: "02:19:42", end: "02:23:58", title: "ファンサ", artist: "" },
+    ],
+  },
   K9TEhHq6dyY: {
     name: "【日籍台V】超美麗3D歌回！覺得唱歌的人很可愛的話請按下喜歡喔！",
     playlist: [
@@ -46,7 +67,7 @@ var gabuPlaylist = {
       { start: "01:51:27", end: "01:55:30", title: "さくらんぼ ", artist: "大塚愛" },
       { start: "01:57:54", end: "02:01:45", title: "夢をかなえてドラえもん ", artist: "mao" },
       { start: "02:22:04", end: "02:27:43", title: "隅田川 ", artist: "amazarashi" },
-      { start: "02:29:14", end: "02:33:47", title: "粛聖!! ロリ神レクイエム☆ ", artist: "しぐれうい" },
+      { start: "02:29:14", end: "02:33:47", title: "粛聖!! ロリ神レクイエム☆", artist: "しぐれうい" },
       { start: "02:37:24", end: "02:57:55", title: "すずめ ", artist: "feat.十明 RADWIMPS" },
       { start: "02:46:06", end: "02:49:33", title: "夏祭り ", artist: "Whiteberry" },
       { start: "02:53:48", end: "02:58:05", title: "高嶺の花子さん ", artist: "back number" }
@@ -96,7 +117,7 @@ var gabuPlaylist = {
       {'start': '01:05:30', 'end': '01:10:58', 'title': '好きだから。', 'artist': 'ユイカ'},
       {'start': '01:18:40', 'end': '01:24:38', 'title': 'マリーゴールド', 'artist': 'あいみょん'},
       {'start': '01:33:28', 'end': '01:38:07', 'title': '水平線', 'artist': 'back number'},
-      {'start': '01:45:37', 'end': '01:48:40', 'title': '好想你', 'artist': '四叶草(朱主爱)'},
+      {'start': '01:45:37', 'end': '01:48:40', 'title': '好想你', 'artist': '四葉草(朱主愛)'},
       {'start': '01:52:12', 'end': '01:57:11', 'title': 'ドライフラワー', 'artist': '優里'},
       {'start': '02:01:50', 'end': '02:06:45', 'title': 'W / X / Y', 'artist': 'Tani Yuuki'},
       {'start': '02:11:10', 'end': '02:14:57', 'title': 'すずめ', 'artist': 'RADWIMPS'},
@@ -396,7 +417,7 @@ var gabuPlaylist = {
       {'start': '1:06:03', 'end': '', 'title': 'ロリ神', 'artist': ''},
       {'start': '1:26:18', 'end': '', 'title': 'Lemon', 'artist': ''},
       {'start': '1:37:55', 'end': '', 'title': '可愛くてごめん', 'artist': ''},
-      {'start': '1:46:18', 'end': '', 'title': '勇氣100%', 'artist': ''},
+      {'start': '1:46:18', 'end': '', 'title': '勇気100%', 'artist': ''},
       {'start': '1:52:54', 'end': '', 'title': '斜陽', 'artist': ''},
       {'start': '2:01:38', 'end': '', 'title': '秒針を噛む', 'artist': ''},
       {'start': '2:10:38', 'end': '', 'title': '花の塔', 'artist': ''},
@@ -422,7 +443,7 @@ var gabuPlaylist = {
       {'start': '2:06:37', 'end': '', 'title': '小小戀歌', 'artist': ''},
       {'start': '2:13:40', 'end': '', 'title': '好想你', 'artist': ''},
       {'start': '2:22:50', 'end': '', 'title': '學叫', 'artist': ''},
-      {'start': '2:28:14', 'end': '', 'title': '勇氣100%', 'artist': ''},
+      {'start': '2:28:14', 'end': '', 'title': '勇気100%', 'artist': ''},
       {'start': '2:42:03', 'end': '', 'title': 'PADORU', 'artist': ''},
       {'start': '2:57:23', 'end': '', 'title': '花に亡霊', 'artist': ''},
       {'start': '3:03:19', 'end': '', 'title': 'にじ', 'artist': ''}
