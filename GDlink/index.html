@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Google Drive 下載鏈接生成器</title>
+                <script>
+                        function convertToDownloadLink() {
+                                    const url = document.getElementById("urlInput").value;
+                                                const pattern = /\/d\/([^/]+)|id=([^&]+)/;
+                                                            const match = url.match(pattern);
+                                                                        let downloadLink;
+
+                                                                                    if (match) {
+                                                                                                    const fileId = match[1] ? match[1] : match[2];
+                                                                                                                    downloadLink = `https://drive.usercontent.google.com/download?id=${fileId}&export=download&confirm=t`;
+                                                                                                                                    document.getElementById("result").textContent = `下載連結: ${downloadLink}`;
+                                                                                                                                                } else {
+                                                                                                                                                                document.getElementById("result").textContent = "無效的 Google Drive 連結。";
+                                                                                                                                                                            }
+                                                                                                                                                                                    }
+                                                                                                                                                                                        </script>
+                                                                                                                                                                                        </head>
+                                                                                                                                                                                        <body>
+                                                                                                                                                                                            <h1>Google Drive 下載鏈接生成器</h1>
+                                                                                                                                                                                                <input type="text" id="urlInput" placeholder="請輸入 Google Drive 連結" />
+                                                                                                                                                                                                    <button onclick="convertToDownloadLink()">生成下載鏈接</button>
+                                                                                                                                                                                                        <p id="result"></p>
+                                                                                                                                                                                                        </body>
+                                                                                                                                                                                                        </html>
