@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRT Generator</title>
+</head>
+<body>
+
+<h1>SRT Generator</h1>
+<input type="text" id="youtube-url" placeholder="Enter YouTube URL" />
+<button id="generate-srt">Generate YouTube SRT by netflixsubs.app</button>
+<p id="video-title"></p>
+<p id="fetch-url"></p>
+<button id="save-srt" style="display: none;">Save SRT</button>
+<pre id="output"></pre>
+
+<script>
+let abortController = null;
+let retryTimeout = null;
+
+// Function to convert milliseconds to SRT timestamp format
+function msToSrtTime(ms) {
+    const date = new Date(ms);
+    const hours = String(date.getUTCHours()).padStart(2, '0');
+    const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+    const seconds = String(date.getUTCSeconds()).padStart(2, '0');
+    const milliseconds = String(date.getUTCMilliseconds()).padStart(3, '0');
+    return `${hours}:${minutes}:${seconds},${milliseconds}`;
+}
+
+// Function to extract YouTube video ID from URL
+function getYouTubeID(url) {
+    const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+    const match = url.match(regex);
+    return match ? match[1] : null;
+}
+
+// Function to fetch video title
+async function getVideoTitle(videoID) {
+    const apiUrl = `https://noembed.com/embed?url=https://www.youtube.com/watch?v=${videoID}`;
+    try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) {
+            throw new Error('Failed to fetch video details');
+        }
+        const data = await response.json();
+        document.getElementById('video-title').textContent = data.title;
+    } catch (error) {
+        console.error('Error fetching video title:', error);
+    }
+}
+
+// Function to handle the SRT response, with queuing handling
+const handleSrtResponse = async (response, videoID, fetchUrl) => {
+    try {
+        const jsonData = await response.json();
+
+        if (jsonData.response === 'Queuing') {
+            // Show the queuing message to the user
+            document.getElementById('output').textContent = `Request is in queue. Position: ${jsonData.position}. Retrying in 1 second...`;
+            retryTimeout = setTimeout(() => fetchSrt(videoID, fetchUrl), 1000);
+        } else if (jsonData.response === 'OK' && jsonData.result) {
+            processSrt(jsonData);
+        } else {
+            document.getElementById('output').textContent = 'No valid SRT content found or response not OK.';
+        }
+    } catch (error) {
+        console.error('Error in handleSrtResponse:', error);
+        document.getElementById('output').textContent = 'Error processing SRT response. Please try again.';
+    }
+};
+
+// Function to process JSON data and display the SRT
+function processSrt(jsonData) {
+    let srtOutput = "";
+    let counter = 1;
+
+    jsonData.result.forEach(segment => {
+        segment.segs.forEach(seg => {
+            const startTime = msToSrtTime(seg.start);
+            const endTime = msToSrtTime(seg.end);
+            const text = seg.text;
+
+            srtOutput += `${counter}\n`;
+            srtOutput += `${startTime} --> ${endTime}\n`;
+            srtOutput += `${text}\n\n`;
+            counter++;
+        });
+    });
+
+    document.getElementById('output').textContent = srtOutput || 'No SRT content available.';
+    showSaveButton(srtOutput);
+}
+
+// Function to show the save button for SRT
+function showSaveButton(srtOutput) {
+    const saveButton = document.getElementById('save-srt');
+    saveButton.style.display = 'block';
+    saveButton.onclick = () => {
+        const blob = new Blob([srtOutput], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = document.getElementById('video-title').textContent + '.srt';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    };
+}
+
+// Function to fetch subtitle data
+async function fetchSrt(videoID, fetchUrl) {
+    try {
+        const response = await fetch(fetchUrl, { signal: abortController.signal });
+        await handleSrtResponse(response, videoID, fetchUrl);
+    } catch (error) {
+        if (error.name === 'AbortError') {
+            console.log('Request aborted');
+        } else {
+            console.error('Error fetching data:', error);
+            document.getElementById('output').textContent = 'Error fetching data. Please try again.';
+        }
+    }
+}
+
+// Function to generate SRT and start fetching
+async function generateSrt() {
+    if (abortController) {
+        abortController.abort(); // Cancel any ongoing requests
+        clearTimeout(retryTimeout); // Cancel any ongoing retries
+    }
+    abortController = new AbortController();
+
+    const urlInput = document.getElementById('youtube-url').value;
+    const videoID = getYouTubeID(urlInput);
+
+    if (!videoID) {
+        document.getElementById('output').textContent = 'Invalid YouTube URL!';
+        return;
+    }
+
+    const fetchUrlV = `https://try.netflixsubs.app/v/${videoID}`;
+    const fetchUrlV2 = `https://try.netflixsubs.app/v2/${videoID}`;
+    document.getElementById('fetch-url').textContent = `Fetching from: ${fetchUrlV} or ${fetchUrlV2}`;
+
+    try {
+        // Use Promise.race to proceed with the first successful fetch
+        const vRequest = fetch(fetchUrlV, { signal: abortController.signal });
+        const v2Request = fetch(fetchUrlV2, { signal: abortController.signal });
+        const response = await Promise.race([vRequest, v2Request]);
+
+        // Handle response from the first successful request
+        await handleSrtResponse(response, videoID, fetchUrlV);
+    } catch (error) {
+        if (error.name === 'AbortError') {
+            console.log('Request aborted');
+        } else {
+            console.error('Error fetching data:', error);
+            document.getElementById('output').textContent = 'Error fetching data. Please try again.';
+        }
+    }
+
+    // Fetch and display video title
+    await getVideoTitle(videoID);
+}
+
+// Attach event listener to the button
+document.getElementById('generate-srt').addEventListener('click', generateSrt);
+</script>
+
+</body>
+</html>
