@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>OneDrive 下載鏈接生成器</title>
+                <script>
+                        // Function to encode the URL to Base64 URL format
+                                function encodeBase64Url(url) {
+                                            const base64Encoded = btoa(url);  // Base64 encode the URL
+                                                        const base64Url = base64Encoded
+                                                                        .replace(/\+/g, '-')  // Replace '+' with '-'
+                                                                                        .replace(/\//g, '_')  // Replace '/' with '_'
+                                                                                                        .replace(/=+$/, '');  // Remove '=' padding
+                                                                                                                    return `u!${base64Url}`;  // Add 'u!' prefix
+                                                                                                                            }
+
+                                                                                                                                    // Function to generate the direct download link from OneDrive URL
+                                                                                                                                            function convertToDownloadLink() {
+                                                                                                                                                        const url = document.getElementById("urlInput").value;  // Get input URL
+                                                                                                                                                                    // Encode the sharing URL to base64url format
+                                                                                                                                                                                const encodedUrl = encodeBase64Url(url);
+                                                                                                                                                                                            // Create the download link
+                                                                                                                                                                                                        const downloadLink = `https://api.onedrive.com/v1.0/shares/${encodedUrl}/root/content`;
+                                                                                                                                                                                                                    // Display the download link
+                                                                                                                                                                                                                                document.getElementById("result").textContent = `下載連結: ${downloadLink}`;
+                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                            </script>
+                                                                                                                                                                                                                                            </head>
+                                                                                                                                                                                                                                            <body>
+                                                                                                                                                                                                                                                <h1>OneDrive 下載鏈接生成器</h1>
+                                                                                                                                                                                                                                                    <input type="text" id="urlInput" placeholder="請輸入 OneDrive 連結" />
+                                                                                                                                                                                                                                                        <button onclick="convertToDownloadLink()">生成下載鏈接</button>
+                                                                                                                                                                                                                                                            <p id="result"></p>
+                                                                                                                                                                                                                                                            </body>
+                                                                                                                                                                                                                                                            </html>
